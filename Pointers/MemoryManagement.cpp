@@ -27,5 +27,14 @@ int main() {
         sum += *(ptr + i);
     }
 
-    
+//step 5: display the results
+    cout << "maximum: " << max << endl;
+    cout << "minimum: " << min << endl;
+    cout<<"sum: "<<sum<<endl;
+
+    //step 6: deallocate memory
+    delete[] arr;
+    cout << "memory deallocated successfully." << endl;
+
+    return 0;
 }
