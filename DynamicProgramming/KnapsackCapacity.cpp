@@ -24,3 +24,19 @@ int knapsack(int weights[], int value[], int n , int capacity) {
     return max(includeItem, excludeItem);
 }
 
+int main() {
+    //example the picnic problem
+
+    int weights[] = {2, 5, 6, 3, 8};
+    int values[] = {3, 5, 6, 7, 4};
+    int n = 5;
+    int capacity = 5;
+
+
+    //solve the problem
+    int maxValue = knapsack(weights, values, n, capacity);
+
+    //output the result
+    cout << "the max value to carry in the bag is: " << maxValue << endl;
+    return 0;
+}
