@@ -14,14 +14,14 @@ public:
         this->id = id;
         this->age = age;
         this->name = name;
-        this->next = nullptr; // Initialize the next pointer to null
+        this->next = NULL; // Initialize the next pointer to null
     }
 };
 
 // Function to display the details of all students in the linked list
 void display(Student* head) {
     // Traverse through the list until reaching the end
-    while (head != nullptr) {
+    while (head != NULL) {
         // Print the current student's details
         cout << "ID: " << head->id << ", Name: " << head->name << ", Age: " << head->age << endl;
         head = head->next; // Move to the next student
@@ -35,6 +35,12 @@ int length(Student* head) {
         head = head->next;
     }
     return count;
+}
+
+void insertNewStudent(Student **head, int id, int age, string name) {
+    Student *newStudent = new Student(id, age, name);
+    newStudent->next = *head;
+    *head = newStudent;
 }
 
 int main() {
@@ -52,12 +58,18 @@ int main() {
     Student* n3 = new Student(3, 19, "James");
     Student* n4 = new Student(4, 20, "Joseph");
 
+    
+
     // Link the second student to the third, and the third to the fourth
     n2.next = n3;
     n3->next = n4;
     //count the number of students in the linked list
     cout << "the length of the linked list is " << length(head) << endl;
     // Display the linked list of students
+    display(head);
+
+    //insert a new student
+    cout << "The inserted student is " << insertNewStudent(&head, 1, 23, "Mugisha") << endl;
     display(head);
     return 0; 
 }
