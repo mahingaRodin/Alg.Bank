@@ -28,6 +28,15 @@ void display(Student* head) {
     }
 }
 
+int length(Student* head) {
+    int count = 0;
+    while(head) {
+        count++;
+        head = head->next;
+    }
+    return count;
+}
+
 int main() {
     // Create the first student as a stack object
     Student n1(1, 17, "Rodin");
@@ -46,7 +55,8 @@ int main() {
     // Link the second student to the third, and the third to the fourth
     n2.next = n3;
     n3->next = n4;
-
+    //count the number of students in the linked list
+    cout << "the length of the linked list is " << length(head) << endl;
     // Display the linked list of students
     display(head);
     return 0; 
