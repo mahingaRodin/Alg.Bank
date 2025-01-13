@@ -17,7 +17,7 @@ void display(Node *head) {
 }
 
 //insertion of  new element in the linked list 
-void insertion(Node *head, int val) {
+void insertion(Node*& head, int val) {
     Node *newNode = new Node();
     newNode->data = val;
     newNode->next = head;
