@@ -24,6 +24,22 @@ void insertion(Node*& head, int val) {
     head = newNode;
 }
 
+//searching an element in the linked list 
+int search(Node* head, int target) {
+    Node *current = head;
+    int position = 1;
+
+    while(current != NULL) {
+        if(current->data == target) {
+            return position;
+        };
+       current = current->next;
+     position++;
+    }
+
+    return -1;// if the element isnot found
+}
+
 
 int main() {
     Node* n1 = new Node();
@@ -42,6 +58,14 @@ int main() {
     //implementation of insertion function
     insertion(n1, 5);
     display(n1);
+
+    //implementation of searching function
+    if(search(n1, 30) != -1) {
+        cout << "Element found at position: " << search(n1, 30) << endl;
+    } else {
+        cout << "Elemenet not found" << endl;
+    }
+
 
     return 0;
 
