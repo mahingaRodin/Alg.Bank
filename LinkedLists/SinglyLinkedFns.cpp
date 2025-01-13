@@ -16,6 +16,14 @@ void display(Node *head) {
     cout << "NULL" << endl;
 }
 
+//insertion of  new element in the linked list 
+void insertion(Node *head, int val) {
+    Node *newNode = new Node();
+    newNode->data = val;
+    newNode->next = head;
+    head = newNode;
+}
+
 
 int main() {
     Node* n1 = new Node();
@@ -28,8 +36,13 @@ int main() {
     n2->next=n3;
     n3->data = 30;
     n3->next = NULL;
-
+    //displaying the linked list 
     display(n1);
+
+    //implementation of insertion function
+    insertion(n1, 5);
+    display(n1);
+
     return 0;
 
 }
