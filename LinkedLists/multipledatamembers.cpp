@@ -66,10 +66,12 @@ int main() {
     //count the number of students in the linked list
     cout << "the length of the linked list is " << length(head) << endl;
     // Display the linked list of students
+    cout << "The current list of student is: " << endl;
     display(head);
 
     //insert a new student
-    cout << "The inserted student is " << insertNewStudent(&head, 1, 23, "Mugisha") << endl;
+    insertNewStudent(&head, 5, 21, "Mugisha");
+    cout << "After inserting a new student at the beginning: " << endl;
     display(head);
     return 0; 
 }
