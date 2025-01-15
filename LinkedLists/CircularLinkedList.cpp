@@ -22,6 +22,12 @@ void addFirst(Node*& tail , int data) {
     }
 }
 
+
+void addLast(Node*&tail , int data) {
+    addFirst(tail, data);
+    tail = tail->next;
+}
+
 void display(Node* tail) {
     if(tail == NULL) {
         cout << "list is empty" << endl;
