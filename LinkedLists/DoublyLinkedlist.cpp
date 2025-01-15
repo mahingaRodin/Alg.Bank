@@ -61,6 +61,24 @@ void insertAfter(Node* giveNode , int data) {
     giveNode->next = newNode;
 }
 
+//insert before a givenNode
+void insertBefore(Node*& head, Node* givenNode, int data) {
+    if(givenNode == NULL) {
+        cout << "given node can't be null";
+        return;
+    }
+    if(givenNode == head) {
+        addFirst(head, data);
+        return;
+    }
+
+    Node *newNode = new Node(data);
+    newNode->next = givenNode;
+    newNode->previous = givenNode->previous;
+    givenNode->previous->next = newNode;
+    givenNode->previous = newNode;
+}
+
 
 int main() {
     Node* n1 = new Node(10);
@@ -80,6 +98,9 @@ int main() {
     cout << "new list: " << endl;
     display(n1);
     insertAfter(n2, 33);
+    cout << "new list: " << endl;
+    display(n1);
+    insertBefore(n1,n2, 13);
     cout << "new list: " << endl;
     display(n1);
     return 0;
