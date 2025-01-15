@@ -11,12 +11,31 @@ struct Node {
         this->next = NULL;
     }
 };
-
+//displaying forward or display only 
 void display(Node* head) {
     Node* n = head;
     while(n!= NULL) {
         cout << n->data << " ";
         n = n->next;
+    }
+    cout << "NULL" << endl;
+}
+
+//displaying backward or reversing 
+void reverse(Node* head) {
+    if(head == NULL) {
+        cout << "list is empty" << endl;
+        return;
+    }
+    Node *temp = head;
+    //traverse to the last node 
+    while(temp->next != NULL) {
+        temp = temp->next;
+    }
+
+    while(temp != NULL) {
+        cout << temp->data << " ";
+        temp = temp->previous;
     }
     cout << "NULL" << endl;
 }
@@ -103,5 +122,7 @@ int main() {
     insertBefore(n1,n2, 13);
     cout << "new list: " << endl;
     display(n1);
+    cout << "reversed list: " << endl;
+    reverse(n1);
     return 0;
     }
