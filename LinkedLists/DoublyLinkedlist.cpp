@@ -46,6 +46,21 @@ void addEnd(Node*& head , int data) {
     n1->previous = n;
 }
 
+//inserting after a given node
+void insertAfter(Node* giveNode , int data) {
+    if(giveNode == NULL) {
+        cout << "given node can't be NULL";
+        return;
+    }
+    Node *newNode = new Node(data);
+    newNode->next = giveNode->next;
+    newNode->previous = giveNode;
+    if(giveNode->next != NULL) {
+        giveNode->next->previous = newNode;
+    }
+    giveNode->next = newNode;
+}
+
 
 int main() {
     Node* n1 = new Node(10);
@@ -62,6 +77,9 @@ int main() {
     cout << "new list: " << endl;
     display(n1);
     addEnd(n1, 40);
+    cout << "new list: " << endl;
+    display(n1);
+    insertAfter(n2, 33);
     cout << "new list: " << endl;
     display(n1);
     return 0;
