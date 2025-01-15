@@ -21,6 +21,7 @@ void display(Node* head) {
     cout << "NULL" << endl;
 }
 
+//insertion at head(first)
 void addFirst(Node*& head, int data) {
     Node* n = new Node(data);
     n->next = head; // link new node to current head
@@ -28,6 +29,21 @@ void addFirst(Node*& head, int data) {
         head->previous = n;// update the current head's previous pointer
     }
     head = n; // update the head to the new node
+}
+
+//insertion at end 
+void addEnd(Node*& head , int data) {
+    Node* n1 = new Node(data);
+    if(head == NULL) {
+        head = n1;
+        return;
+    }
+    Node *n = head;
+    while(n->next != NULL) {
+        n = n->next;
+    }
+    n->next = n1;
+    n1->previous = n;
 }
 
 
@@ -43,6 +59,9 @@ int main() {
     display(n1);
 
     addFirst(n1, 5);
+    cout << "new list: " << endl;
+    display(n1);
+    addEnd(n1, 40);
     cout << "new list: " << endl;
     display(n1);
     return 0;
