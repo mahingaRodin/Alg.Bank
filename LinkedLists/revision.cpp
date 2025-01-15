@@ -44,22 +44,37 @@ void display(Node *head) {
     cout<<"NULL"<< endl;
 }
 
+Node* userData() {
+    int data;
+    cout << "Add a number to the LL or -1 to exit" << endl;
+    cin >> data;
+    Node *head = NULL;
+    while (data != -1) {
+        Node *n = new Node(data);
+        if(head == NULL) {
+            head = n;
+        } else {
+            n->next = head;
+            head = n;
+        }
+        cin >> data;
+    }
+    return head;
+}
+
 
 int main() {
-    Node *n1 = new Node(10);
-    Node *n2 = new Node(20);
-    Node *n3 = new Node(30);
-    Node *n4 = new Node(40);
-    n1->next = n2;
-    n2->next = n3;
-    n3->next = n4;
-    n4->next = NULL;
-    display(n1);
+    // Node *n1 = new Node(10);
+    // Node *n2 = new Node(20);
+    // Node *n3 = new Node(30);
+    // Node *n4 = new Node(40);
+    // n1->next = n2;
+    // n2->next = n3;
+    // n3->next = n4;
+    // n4->next = NULL;
+    // display(n1);
 
-    Node *head = addAtHead(n1, 100);
-    display(head);
-
-     addAtTail(head, 150);
+    Node *head = userData();
     display(head);
     return 0;
 }
