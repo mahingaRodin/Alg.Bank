@@ -25,9 +25,11 @@ int main() {
     Node* n2 = new Node(20);
     Node *n3 = new Node(30);
     Node *n4 = new Node(40);
+    Node n5 (50);
     n1->next = n2;
     n2->next = n3;
     n3->next = n4;
-    display(n3);
+    n4->next = &n5;
+    display(n1);
     return 0;
 }
