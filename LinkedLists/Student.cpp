@@ -15,6 +15,7 @@ struct Student {
         school = sc;
         level = l;
         age = a;
+        next = NULL;
     }
 };
 
