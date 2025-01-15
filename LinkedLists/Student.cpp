@@ -31,11 +31,12 @@ int main() {
     s1->code = 101;
     s1->name = "Rodin";
     s1->school = "RCA";
+    s1->level = "Y3";
     s1->age = 17;
 
-    Student *s2 = new Student(102,"Peter", "RCA", "10", 17);
-    Student *s3 = new Student(102,"John", "RCA", "10", 17);
-    Student *s4 = new Student(102,"Mike", "RCA", "10", 19);
+    Student *s2 = new Student(102,"Peter", "RCA", "Y2A", 17);
+    Student *s3 = new Student(102,"John", "RCA", "Y2D", 17);
+    Student *s4 = new Student(102,"Mike", "RCA", "Y2", 19);
     s1->next = s2;
     s2->next = s3;
     s3->next = s4;
