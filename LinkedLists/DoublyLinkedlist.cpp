@@ -21,6 +21,15 @@ void display(Node* head) {
     cout << "NULL" << endl;
 }
 
+void addFirst(Node*& head, int data) {
+    Node* n = new Node(data);
+    n->next = head; // link new node to current head
+    if(head != NULL) {
+        head->previous = n;// update the current head's previous pointer
+    }
+    head = n; // update the head to the new node
+}
+
 
 int main() {
     Node* n1 = new Node(10);
@@ -31,6 +40,10 @@ int main() {
     n2->next = n3;
     n3->previous = n2;
 
+    display(n1);
+
+    addFirst(n1, 5);
+    cout << "new list: " << endl;
     display(n1);
     return 0;
     }
