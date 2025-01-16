@@ -26,6 +26,19 @@ void display(Node* tail) {
     cout<<"NULL"<<endl;
 }
 
+Node *addEnd(Node *tail, int data) {
+    Node *n = new Node(data);
+    if(tail == NULL) {
+        n->next = n;
+        tail = n;
+    } else {
+        n->next = tail->next;
+        tail->next = n;
+        tail = n;
+    }
+    return tail;
+}
+
 
 
 int main() {
@@ -40,6 +53,10 @@ int main() {
     n2->next = n3;
     n3->next = n1;
 
+    display(n3);
+
+    n3 = addEnd(n3, 40);
+    cout << "new list: " << endl;
     display(n3);
     return 0;
 }
