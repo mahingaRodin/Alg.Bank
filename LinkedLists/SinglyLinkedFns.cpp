@@ -40,6 +40,31 @@ int search(Node* head, int target) {
     return -1;// if the element isnot found
 }
 
+//method to delete the first element
+Node *deleteHead(Node *head) {
+    Node *temp = head;
+    head = head->next;
+    delete temp;
+    return head;
+}
+
+//delete end
+Node *deleteEnd(Node* head) {
+    if(head == NULL){
+        return NULL;
+    }
+    if(head->next == NULL){
+        delete head;
+        return NULL;
+    }
+
+    Node *temp = head;
+    while(temp->next->next != NULL) {
+        delete (temp->next);
+        temp->next = NULL;
+        }
+        return head;
+}
 
 int main() {
     Node* n1 = new Node();
@@ -66,6 +91,8 @@ int main() {
         cout << "Elemenet not found" << endl;
     }
 
+    Node* head = deleteEnd(n1);
+    display(head);
 
     return 0;
 
