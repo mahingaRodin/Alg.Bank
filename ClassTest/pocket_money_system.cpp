@@ -53,3 +53,19 @@ void viewCustomers() {
         temp = temp->next;
     }
 }
+
+
+void deposit(int customerCode, int amount, string date) {
+    Customer *temp = customerList;
+    while(temp != NULL) {
+        if(temp->code == customerCode) {
+            temp->balance += amount;
+            addTransaction(customerCode, "deposit", amount, date);
+            cout<<"Deposit successful. New balance: "<<temp->balance<<endl;
+            return;
+        }
+        temp = temp->next;
+    }
+    cout << "Customer Not Found." << endl;
+}
+
