@@ -1,5 +1,7 @@
 #include <iostream>
+#include <cstring>
 #include <ctime>
+#include <limits>
 
 using namespace std;
 
@@ -32,10 +34,23 @@ public:
     }
 
     void addCustomer(int code, const char* name, const char* dob, int balance) {
+        int year;
+        sscanf(dob, "%*d/%*d/%d", &year);
+        if (year > 2025) {
+            cout << "Error: Invalid DOB. Year cannot be after 2025." << endl;
+            return;
+        }
+
         Customer* newCustomer = new Customer();
         newCustomer->code = code;
-        strcpy(newCustomer->name, name);
-        strcpy(newCustomer->dob, dob);
+        for (int i = 0; name[i] != '\0'; ++i) {
+            newCustomer->name[i] = name[i];
+        }
+        newCustomer->name[strlen(name)] = '\0';
+        for (int i = 0; dob[i] != '\0'; ++i) {
+            newCustomer->dob[i] = dob[i];
+        }
+        newCustomer->dob[strlen(dob)] = '\0';
         newCustomer->balance = balance;
         newCustomer->next = customerList;
         customerList = newCustomer;
@@ -65,7 +80,6 @@ public:
             }
             temp = temp->next;
         }
-        cout << "Customer not found." << endl;
     }
 
     void withdraw(int customerCode, int amount, const char* date) {
@@ -76,146 +90,110 @@ public:
                     temp->balance -= amount;
                     addTransaction(customerCode, "withdraw", amount, date);
                     cout << "Withdrawal successful. New balance: " << temp->balance << endl;
-                    return;
                 } else {
                     cout << "Insufficient balance." << endl;
-                    return;
                 }
-            }
-            temp = temp->next;
-        }
-        cout << "Customer not found." << endl;
-    }
-
-    void checkBalance(int customerCode) {
-        Customer* temp = customerList;
-        while (temp != NULL) {
-            if (temp->code == customerCode) {
-                cout << "Balance: " << temp->balance << endl;
                 return;
             }
             temp = temp->next;
         }
-        cout << "Customer not found." << endl;
     }
 
-private:
     void addTransaction(int customerCode, const char* transactionType, int amount, const char* date) {
         Transaction* newTransaction = new Transaction();
-        newTransaction->id = rand();
+        newTransaction->id = transactionList ? transactionList->id + 1 : 1;
         newTransaction->customerCode = customerCode;
-        strcpy(newTransaction->transactionType, transactionType);
+        for (int i = 0; transactionType[i] != '\0'; ++i) {
+            newTransaction->transactionType[i] = transactionType[i];
+        }
+        newTransaction->transactionType[strlen(transactionType)] = '\0';
         newTransaction->amount = amount;
-        strcpy(newTransaction->date, date);
+        for (int i = 0; date[i] != '\0'; ++i) {
+            newTransaction->date[i] = date[i];
+        }
+        newTransaction->date[strlen(date)] = '\0';
         newTransaction->next = transactionList;
         transactionList = newTransaction;
     }
 
-    bool isValidIntInput(int &input) {
-        if (!(cin >> input)) {
-            cout << "Invalid input. Please enter a valid number." << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
-            return false;
-        }
-        return true;
-    }
-
-    bool isValidYear(int year) {
-        if (year > 2025) {
-            cout << "Year cannot be later than 2025. Please enter a valid year." << endl;
-            return false;
-        }
-        return true;
-    }
-
     const char* getCurrentDate() {
-        time_t t = time(0);
-        struct tm *now = localtime(&t);
-        static char dateStr[11];
-        strftime(dateStr, sizeof(dateStr), "%d/%m/%Y", now);
-        return dateStr;
+        time_t now = time(0);
+        tm *ltm = localtime(&now);
+        static char date[11];
+        snprintf(date, sizeof(date), "%02d/%02d/%04d", ltm->tm_mday, ltm->tm_mon + 1, ltm->tm_year + 1900);
+        return date;
+    }
+
+    bool isValidIntInput(int &input) {
+        cin >> input;
+        if (cin.fail()) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Error: Invalid input. Please enter a valid integer." << endl;
+            return false;
+        }
+        return true;
+    }
+
+    bool isValidDob(const char* dob) {
+        int day, month, year;
+        if (sscanf(dob, "%d/%d/%d", &day, &month, &year) != 3 || year > 2025) {
+            cout << "Error: Invalid DOB. Year cannot be after 2025." << endl;
+            return false;
+        }
+        return true;
     }
 };
 
 int main() {
     PocketMoneySystem system;
     int choice;
-
-    do {
-        cout << "\nMenu: " << endl;
-        cout << "1. Add Customer" << endl;
-        cout << "2. View Customers" << endl;
-        cout << "3. Deposit" << endl;
-        cout << "4. Withdraw" << endl;
-        cout << "5. Check Balance" << endl;
-        cout << "6. Exit" << endl;
+    while (true) {
+        cout << "1. Add customer\n2. View customers\n3. Deposit\n4. Withdraw\n5. Check balance\n6. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
-
-        int code;
-        char name[100], dob[11];
-        int amount;
-
-        switch (choice) {
-        case 1:
-            cout << "Enter customer code: ";
+        if (choice == 1) {
+            int code, balance;
+            char name[100], dob[11];
+            cout << "Enter code: ";
             while (!system.isValidIntInput(code)) {}
-
-            cout << "Enter customer name: ";
-            cin.ignore();
-            cin.getline(name, 100);
-            
-            cout << "Enter customer date of birth (DD/MM/YYYY): ";
-            cin.getline(dob, 11);
-            
-            cout << "Enter initial balance: ";
-            while (!system.isValidIntInput(amount)) {}
-
-            system.addCustomer(code, name, dob, amount);
-            break;
-
-        case 2:
+            cout << "Enter name: ";
+            cin >> name;
+            cout << "Enter DOB (dd/mm/yyyy): ";
+            cin >> dob;
+            while (!system.isValidDob(dob)) {
+                cout << "Enter DOB (dd/mm/yyyy): ";
+                cin >> dob;
+            }
+            cout << "Enter balance: ";
+            while (!system.isValidIntInput(balance)) {}
+            system.addCustomer(code, name, dob, balance);
+        } else if (choice == 2) {
             system.viewCustomers();
-            break;
-
-        case 3:
+        } else if (choice == 3) {
+            int code, amount;
             cout << "Enter customer code: ";
             while (!system.isValidIntInput(code)) {}
-
-            cout << "Enter deposit amount: ";
+            cout << "Enter amount to deposit: ";
             while (!system.isValidIntInput(amount)) {}
-
             const char* date = system.getCurrentDate();
             system.deposit(code, amount, date);
-            break;
-
-        case 4:
+        } else if (choice == 4) {
+            int code, amount;
             cout << "Enter customer code: ";
             while (!system.isValidIntInput(code)) {}
-
-            cout << "Enter withdrawal amount: ";
+            cout << "Enter amount to withdraw: ";
             while (!system.isValidIntInput(amount)) {}
-
-            date = system.getCurrentDate();
+            const char* date = system.getCurrentDate();
             system.withdraw(code, amount, date);
-            break;
-
-        case 5:
+        } else if (choice == 5) {
+            int code;
             cout << "Enter customer code: ";
             while (!system.isValidIntInput(code)) {}
-
-            system.checkBalance(code);
+            system.viewCustomers();
+        } else if (choice == 6) {
             break;
-
-        case 6:
-            cout << "Exiting..." << endl;
-            break;
-
-        default:
-            cout << "Invalid choice, try again." << endl;
         }
-    } while (choice != 6);
-
+    }
     return 0;
 }
