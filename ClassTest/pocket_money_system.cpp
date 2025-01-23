@@ -168,10 +168,10 @@ int main() {
             char name[100], dob[11];
             cout << "Enter code: ";
             while (!system.isValidIntInput(code)) {}
-            cout << "Enter name: ";
+            cout << "Enter a name: ";
             cin >> name;
             while (!system.isValidName(name)) {
-                cout << "Enter name: ";
+                cout << "Enter a name: ";
                 cin >> name;
             }
             cout << "Enter DOB (dd/mm/yyyy): ";
