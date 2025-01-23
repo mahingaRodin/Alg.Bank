@@ -1,97 +1,93 @@
-#include<iostream>
+#include <iostream>
+#include <ctime>
+
 using namespace std;
 
 struct Customer {
     int code;
-    string name;
-    string dob;
+    char name[100];
+    char dob[11];
     int balance;
-    Customer *next;
+    Customer* next;
 };
-
 
 struct Transaction {
     int id;
     int customerCode;
-    string transactionType;
+    char transactionType[10];
     int amount;
-    string date;
-    Transaction *next;
+    char date[11];
+    Transaction* next;
 };
 
 class PocketMoneySystem {
-    private:
-        Customer* customerList;
-        Transaction* transactionList;
-    
-    public:
-        PocketMoneySystem() {
-            customerList = NULL;
-            transactionList = NULL;
-        }
+private:
+    Customer* customerList;
+    Transaction* transactionList;
 
-        void addCustomer(int code, string name, string dob, int balance) {
-    Customer *newCustomer = new Customer();
-    newCustomer->code = code;
-    newCustomer->name = name;
-    newCustomer->dob = dob;
-    newCustomer->balance = balance;
-    newCustomer->next = customerList;
-    customerList = newCustomer;
-    cout<<"Customer added successfully!"<<endl;
-}
-
-
-void viewCustomers() {
-    Customer *temp = customerList;
-    if(temp == NULL) {
-        cout<<"No customers found!"<<endl;
-        return;
+public:
+    PocketMoneySystem() {
+        customerList = NULL;
+        transactionList = NULL;
     }
 
-    while(temp != NULL) {
-        cout<<"Code: "<<temp->code<<" , Name: "<<temp->name<<" , DOB: "<<temp->dob<<" , Balance: "<<temp->balance<<endl;
-        temp = temp->next;
+    void addCustomer(int code, const char* name, const char* dob, int balance) {
+        Customer* newCustomer = new Customer();
+        newCustomer->code = code;
+        strcpy(newCustomer->name, name);
+        strcpy(newCustomer->dob, dob);
+        newCustomer->balance = balance;
+        newCustomer->next = customerList;
+        customerList = newCustomer;
+        cout << "Customer added successfully." << endl;
     }
-}
 
-
-void deposit(int customerCode, int amount, string date) {
-    Customer* temp = customerList;
-    while(temp != NULL) {
-        if(temp->code == customerCode) {
-            temp->balance += amount;
-            addTransaction(customerCode, "deposit", amount, date);
-            cout<<"Deposit successful. New balance: "<<temp->balance<<endl;
+    void viewCustomers() {
+        Customer* temp = customerList;
+        if (temp == NULL) {
+            cout << "No customers found." << endl;
             return;
         }
-        temp = temp->next;
-    }
-    cout << "Customer Not Found." << endl;
-}
-
-void withdraw(int customerCode, int amount, string date) {
-    Customer *temp = customerList;
-    while(temp !=NULL) {
-        if(temp->code == customerCode) {
-            if(temp->balance >= amount) {
-                temp->balance -= amount;
-                addTransaction(customerCode, "withdraw", amount, date);
-                cout<<"Withdraw successful. New balance: "<<temp->balance<<endl;
-                return;
-            }
-            else {
-                cout << "Insufficient balance";
-                return;
-            }
+        while (temp != NULL) {
+            cout << "Code: " << temp->code << ", Name: " << temp->name << ", DOB: " << temp->dob << ", Balance: " << temp->balance << endl;
+            temp = temp->next;
         }
-        temp = temp->next;
-
     }
-    cout << "Customer Not Found" << endl;
-}
 
- void checkBalance(int customerCode) {
+    void deposit(int customerCode, int amount, const char* date) {
+        Customer* temp = customerList;
+        while (temp != NULL) {
+            if (temp->code == customerCode) {
+                temp->balance += amount;
+                addTransaction(customerCode, "deposit", amount, date);
+                cout << "Deposit successful. New balance: " << temp->balance << endl;
+                return;
+            }
+            temp = temp->next;
+        }
+        cout << "Customer not found." << endl;
+    }
+
+    void withdraw(int customerCode, int amount, const char* date) {
+        Customer* temp = customerList;
+        while (temp != NULL) {
+            if (temp->code == customerCode) {
+                if (temp->balance >= amount) {
+                    temp->balance -= amount;
+                    addTransaction(customerCode, "withdraw", amount, date);
+                    cout << "Withdrawal successful. New balance: " << temp->balance << endl;
+                    return;
+                } else {
+                    cout << "Insufficient balance." << endl;
+                    return;
+                }
+            }
+            temp = temp->next;
+        }
+        cout << "Customer not found." << endl;
+    }
+
+    void checkBalance(int customerCode) {
         Customer* temp = customerList;
         while (temp != NULL) {
             if (temp->code == customerCode) {
@@ -103,19 +99,43 @@ void withdraw(int customerCode, int amount, string date) {
         cout << "Customer not found." << endl;
     }
 
-
 private:
+    void addTransaction(int customerCode, const char* transactionType, int amount, const char* date) {
+        Transaction* newTransaction = new Transaction();
+        newTransaction->id = rand();
+        newTransaction->customerCode = customerCode;
+        strcpy(newTransaction->transactionType, transactionType);
+        newTransaction->amount = amount;
+        strcpy(newTransaction->date, date);
+        newTransaction->next = transactionList;
+        transactionList = newTransaction;
+    }
 
-void addTransaction(int customerCode, string transactionType, int amount, string date) {
-    Transaction *newTransaction = new Transaction();
-    newTransaction->id = rand();
-    newTransaction->customerCode = customerCode;
-    newTransaction->transactionType = transactionType;
-    newTransaction->amount = amount;
-    newTransaction->date = date;
-    newTransaction->next = transactionList;
-    transactionList = newTransaction;
-}
+    bool isValidIntInput(int &input) {
+        if (!(cin >> input)) {
+            cout << "Invalid input. Please enter a valid number." << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
+            return false;
+        }
+        return true;
+    }
+
+    bool isValidYear(int year) {
+        if (year > 2025) {
+            cout << "Year cannot be later than 2025. Please enter a valid year." << endl;
+            return false;
+        }
+        return true;
+    }
+
+    const char* getCurrentDate() {
+        time_t t = time(0);
+        struct tm *now = localtime(&t);
+        static char dateStr[11];
+        strftime(dateStr, sizeof(dateStr), "%d/%m/%Y", now);
+        return dateStr;
+    }
 };
 
 int main() {
@@ -134,64 +154,68 @@ int main() {
         cin >> choice;
 
         int code;
-        string name, dob, date;
+        char name[100], dob[11];
         int amount;
 
-        switch(choice) {
-            case 1:
+        switch (choice) {
+        case 1:
             cout << "Enter customer code: ";
-            cin >> code;
+            while (!system.isValidIntInput(code)) {}
+
             cout << "Enter customer name: ";
             cin.ignore();
-            getline(cin, name);
+            cin.getline(name, 100);
+            
             cout << "Enter customer date of birth (DD/MM/YYYY): ";
-            getline(cin, dob);
+            cin.getline(dob, 11);
+            
             cout << "Enter initial balance: ";
-            cin >> amount;
+            while (!system.isValidIntInput(amount)) {}
+
             system.addCustomer(code, name, dob, amount);
             break;
 
-            case 2:
+        case 2:
             system.viewCustomers();
             break;
 
-            case 3:
+        case 3:
             cout << "Enter customer code: ";
-            cin >> code;
+            while (!system.isValidIntInput(code)) {}
+
             cout << "Enter deposit amount: ";
-            cin >> amount;
-            cout << "Enter transaction date (DD/MM/YYYY): ";
-            cin.ignore();
-            getline(cin, date);
+            while (!system.isValidIntInput(amount)) {}
+
+            const char* date = system.getCurrentDate();
             system.deposit(code, amount, date);
             break;
 
-            case 4:
+        case 4:
             cout << "Enter customer code: ";
-            cin >> code;
+            while (!system.isValidIntInput(code)) {}
+
             cout << "Enter withdrawal amount: ";
-            cin >> amount;
-            cout << "Enter transaction date (DD/MM/YYYY): ";
-            cin.ignore();
-            getline(cin, date);
+            while (!system.isValidIntInput(amount)) {}
+
+            date = system.getCurrentDate();
             system.withdraw(code, amount, date);
             break;
 
-            case 5:
-                cout << "Enter customer code: ";
-                cin >> code;
-                system.checkBalance(code);
-                break;
+        case 5:
+            cout << "Enter customer code: ";
+            while (!system.isValidIntInput(code)) {}
 
-            case 6:
-                cout << "Exiting..." << endl;
-                break;
+            system.checkBalance(code);
+            break;
 
-            default:
-                cout << "Invalid choice , try again." << endl;
+        case 6:
+            cout << "Exiting..." << endl;
+            break;
+
+        default:
+            cout << "Invalid choice, try again." << endl;
         }
-    } while (
-        choice != 6);
+    } while (choice != 6);
 
     return 0;
 }
