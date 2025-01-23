@@ -56,7 +56,7 @@ void viewCustomers() {
 
 
 void deposit(int customerCode, int amount, string date) {
-    Customer *temp = customerList;
+    Customer* temp = customerList;
     while(temp != NULL) {
         if(temp->code == customerCode) {
             temp->balance += amount;
@@ -69,3 +69,23 @@ void deposit(int customerCode, int amount, string date) {
     cout << "Customer Not Found." << endl;
 }
 
+void withdraw(int customerCode, int amount, string date) {
+    Customer *temp = customerList;
+    while(temp !=NULL) {
+        if(temp->code == customerCode) {
+            if(temp->balance >= amount) {
+                temp->balance -= amount;
+                addTransaction(customerCode, "withdraw", amount, date);
+                cout<<"Withdraw successful. New balance: "<<temp->balance<<endl;
+                return;
+            }
+            else {
+                cout << "Insufficient balance";
+                return;
+            }
+        }
+        temp = temp->next;
+
+    }
+    cout << "Customer Not Found" << endl;
+}
