@@ -35,7 +35,6 @@ public:
     }
 
     void addCustomer(int code, const char* name, const char* dob, int balance) {
-        // Check if the DOB is valid (not after 2025)
         int year;
         sscanf(dob, "%*d/%*d/%d", &year);
         if (year > 2025) {
