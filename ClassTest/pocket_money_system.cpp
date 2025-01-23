@@ -2,6 +2,7 @@
 #include <cstring>
 #include <ctime>
 #include <limits>
+#include <cctype>
 
 using namespace std;
 
@@ -34,6 +35,7 @@ public:
     }
 
     void addCustomer(int code, const char* name, const char* dob, int balance) {
+        // Check if the DOB is valid (not after 2025)
         int year;
         sscanf(dob, "%*d/%*d/%d", &year);
         if (year > 2025) {
@@ -138,8 +140,18 @@ public:
     bool isValidDob(const char* dob) {
         int day, month, year;
         if (sscanf(dob, "%d/%d/%d", &day, &month, &year) != 3 || year > 2025) {
-            cout << "Error: Invalid DOB. Year cannot be after 2025." << endl;
+            cout << "Error: Invalid DOB. Please enter a valid date of birth!" << endl;
             return false;
+        }
+        return true;
+    }
+
+    bool isValidName(const char* name) {
+        for (int i = 0; name[i] != '\0'; ++i) {
+            if (isdigit(name[i])) {
+                cout << "Error: Name cannot contain numbers." << endl;
+                return false;
+            }
         }
         return true;
     }
@@ -159,6 +171,10 @@ int main() {
             while (!system.isValidIntInput(code)) {}
             cout << "Enter name: ";
             cin >> name;
+            while (!system.isValidName(name)) {
+                cout << "Enter name: ";
+                cin >> name;
+            }
             cout << "Enter DOB (dd/mm/yyyy): ";
             cin >> dob;
             while (!system.isValidDob(dob)) {
