@@ -89,3 +89,17 @@ void withdraw(int customerCode, int amount, string date) {
     }
     cout << "Customer Not Found" << endl;
 }
+
+
+private:
+
+void addTransaction(int customerCode, string transactionType, int amount, string date) {
+    Transaction *newTransaction = new Transaction();
+    newTransaction->id = rand();
+    newTransaction->customerCode = customerCode;
+    newTransaction->transactionType = transactionType;
+    newTransaction->amount = amount;
+    newTransaction->date = date;
+    newTransaction->next = transactionList;
+    transactionList = newTransaction;
+}
