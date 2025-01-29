@@ -17,5 +17,8 @@ int main() {
         cout<<"Queue is not empty"<<endl;
     }
 
+    cout << "front: " <<numbers.front() << endl;
+    cout<<"back: "<<numbers.back()<<endl;
+
     return 0;
 }
