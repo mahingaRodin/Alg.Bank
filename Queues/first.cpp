@@ -23,6 +23,10 @@ int main() {
     numbers.push(20);
     numbers.push(23);
     numbers.push(40);
+    cout << endl;
+    cout << "front: " <<numbers.front() << endl;
+    cout<<"back: "<<numbers.back()<<endl;
 
+    cout << "Size: " << numbers.size() << endl;
     return 0;
 }
