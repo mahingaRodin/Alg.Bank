@@ -29,7 +29,7 @@ int main() {
 
     cout << "Size: " << numbers.size() << endl;
 
-    numbers.pop(10);
+    numbers.pop();
      cout << endl;
     cout << "front: " <<numbers.front() << endl;
     cout<<"back: "<<numbers.back()<<endl;
