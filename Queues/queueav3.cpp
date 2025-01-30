@@ -61,20 +61,21 @@ void display() {
 };
 
 int main() {
-    Queue q(5);
+    // Queue q(5);
+    Queue *q = new Queue(5);
     cout << "start adding elements" << endl;
-    q.enqueue(10);
-    q.enqueue(20);
-    q.enqueue(30);
-    q.enqueue(40);
-    q.enqueue(50);
-    q.enqueue(60);
+    q->enqueue(10);
+    q->enqueue(20);
+    q->enqueue(30);
+    q->enqueue(40);
+    q->enqueue(50);
+    q->enqueue(60);
 
-    q.display();
+    q->display();
 
-    q.dequeue();
-    q.dequeue();
-    q.display();
+    q->dequeue();
+    q->dequeue();
+    q->display();
 
     return 0;
 }
