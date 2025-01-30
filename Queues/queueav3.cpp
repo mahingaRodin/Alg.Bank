@@ -7,11 +7,13 @@ public:
     int front;
     int rear;
     int capacity; //equivalent to n
+    int size;
 
     Queue(int cap) {
         capacity = cap;
         front = rear = -1;
         queue = new int[capacity]; //dynamic allocation of memory
+        size = 0;
     }
 
     void enqueue(int val)
@@ -29,16 +31,20 @@ public:
             rear++;
             queue[rear] = val;
         }
+        size++;
 }
 
 void dequeue() {
-    if(front == -1 || front > rear) {
+     if( isEmpty()
+        // front == -1 || front > rear
+        ) {
         cout << "queue is empty" << endl;
     }
     else {
         cout << "element deleted from the queue: " << queue[front] << endl;
         front++;
     }
+    size--;
 }
 
 int getFront() {
@@ -60,6 +66,17 @@ void display() {
 }
 };
 
+int count {
+    return size;
+}
+
+bool isEmpty() {
+    return size == 0;
+}
+
+bool isFull() {
+    return size == capacity;
+}
 int main() {
     // Queue q(5);
     Queue *q = new Queue(5);
