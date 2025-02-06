@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Chair</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        svg {
+            width: 200px;
+            height: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <svg viewBox="0 0 200 300">
+        <!-- Seat -->
+        <rect x="50" y="150" width="100" height="20" fill="brown" stroke="black" stroke-width="2" />
+
+        <!-- Backrest -->
+        <rect x="50" y="70" width="100" height="80" fill="saddlebrown" stroke="black" stroke-width="2" />
+
+        <!-- Legs -->
+        <rect x="50" y="170" width="15" height="80" fill="black" />
+        <rect x="135" y="170" width="15" height="80" fill="black" />
+        <rect x="50" y="250" width="15" height="50" fill="black" />
+        <rect x="135" y="250" width="15" height="50" fill="black" />
+    </svg>
+</body>
+
+</html>
