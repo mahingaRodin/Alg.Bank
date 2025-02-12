@@ -53,3 +53,15 @@ class Stack {
             }
 };
 
+
+int main() {
+    Stack s;
+    s.push(100);
+    s.push(200);
+    s.push(300);
+    cout << "Top element: " << s.peek() << "\n";
+    s.pop();
+    s.pop();
+    s.pop();
+    return 0;
+}
