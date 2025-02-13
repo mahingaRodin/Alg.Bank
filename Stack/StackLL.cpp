@@ -11,7 +11,7 @@ struct Node {
         this->data = data;
         next = NULL;
     }
-}
+};
 
 // initialize the stack class
 class Stack {
@@ -49,7 +49,7 @@ class Stack {
             }
 
             bool isEmpty() {
-                return top = NULL;
+                return top == NULL;
             }
 };
 
