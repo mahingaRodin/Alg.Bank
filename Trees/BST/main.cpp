@@ -70,18 +70,18 @@ int main() {
     inorderTraversal(root);
     cout << endl;
 
-    int searchVal = 12;
+    int searchVal = 100;
     if(search(root, searchVal)) {
         cout << "Val: " << searchVal << " found in the BST." << endl;
     } else {
         cout << "Val: " << searchVal << " not found in the BST." << endl;
     }
 
-     int searchVal = 15;
-    if(search(root, searchVal)) {
-        cout << "Val: " << searchVal << " found in the BST." << endl;
+     int searchValu = 15;
+    if(search(root, searchValu)) {
+        cout << "Val: " << searchValu << " found in the BST." << endl;
     } else {
-        cout << "Val: " << searchVal << " not found in the BST." << endl;
+        cout << "Val: " << searchValu << " not found in the BST." << endl;
     }
 
     return 0;
