@@ -1,5 +1,4 @@
 #include <iostream>
-#include <limits>
 using namespace std;
 
 class WeightedGraph {
@@ -14,7 +13,7 @@ public:
         for (int i = 0; i < n; i++) {
             adj[i] = new int[n];
             for (int j = 0; j < n; j++) {
-                adj[i][j] = (i == j) ? 0 : numeric_limits<int>::max();
+                adj[i][j] = (i == j) ? 0 : 999999; 
             }
         }
     }
@@ -39,15 +38,15 @@ public:
             cout << "Invalid edge!\n";
             return;
         }
-        adj[origin - 1][destin - 1] = numeric_limits<int>::max();
+        adj[origin - 1][destin - 1] = 999999;
     }
 
     void display() {
         cout << "Weighted Adjacency Matrix:\n";
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (adj[i][j] == numeric_limits<int>::max())
-                    cout << "8  ";
+                if (adj[i][j] == 999999)
+                    cout << "∞  ";
                 else
                     cout << adj[i][j] << "  ";
             }
@@ -83,7 +82,7 @@ int main() {
         wg.add_edge(origin, destin, weight);
     }
 
-    cout << "\nInitial weighted adjacency matrix:\n";
+    cout << "\nInitial weighted adjacency matrix:\n"; 
     wg.display();
 
     wg.delete_edge(1, 2);
@@ -94,4 +93,3 @@ int main() {
 
     return 0;
 }
-
