@@ -58,6 +58,7 @@
     "iostream": "cpp",
     "new": "cpp",
     "ostream": "cpp",
-    "limits": "cpp"
+    "limits": "cpp",
+    "vector": "cpp"
   }
 }
