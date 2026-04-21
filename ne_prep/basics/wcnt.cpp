@@ -5,7 +5,7 @@ using namespace std;
 
 int main() {
 	string text;
-	int charWithSpaces;
+	int charWithSpaces=0;
 	int charWithoutSpaces=0;
 	int wordCount=0;
 	
